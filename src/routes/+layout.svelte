@@ -1,5 +1,4 @@
 <script lang="ts">
-	import favicon from '$lib/assets/favicon.svg'
 	import { BookOpen, HeartHandshake, HeartPlus, User, Wind } from '@lucide/svelte'
 	import AuroraBg from '@shared/AuroraBg.svelte'
 	import NavBar from '@shared/NavBar.svelte'
@@ -33,20 +32,18 @@
 
 <svelte:window onclick={handleClick} />
 
-<svelte:head>
-	<link rel="icon" href={favicon} />
-</svelte:head>
+<div class="big-window">
+	<AuroraBg
+		colorStops={['#00deee', '#4ea4f5', '#c476fa']}
+		amplitude={0.8}
+		blend={0.5}
+		speed={1}
+		{isDarkTheme}
+		style={'top: 0; opacity: 0.3; max-height: 100px;'}
+	/>
+</div>
 
-<AuroraBg
-	colorStops={['#00deee', '#4ea4f5', '#c476fa']}
-	amplitude={0.8}
-	blend={0.5}
-	speed={1}
-	{isDarkTheme}
-	style={'top: 0; opacity: 0.3; max-height: 100px;'}
-/>
-
-<div class="mobile-only">
+<div class="small-window">
 	<AuroraBg
 		colorStops={['#00deee', '#4ea4f5', '#c476fa']}
 		amplitude={0.8}
@@ -86,32 +83,27 @@
 		}
 	]}
 />
+
 <main>
 	{@render children()}
 </main>
 
 <style>
-	@media (min-width: 701px) {
-		.mobile-only {
-			display: none;
-		}
-	}
-	main {
-		scrollbar-width: none;
-		overflow: scroll;
-		min-height: 100px;
-		height: 100dvh;
-		width: 100vw;
-		padding: 0 0 0 var(--tab-size);
-		box-sizing: border-box;
+	.big-window {
+		display: none;
 	}
 
-	@media (max-width: 700px) {
+	@media (min-width: 601px) {
+		.small-window {
+			display: none;
+		}
+
+		.big-window {
+			display: unset;
+		}
+
 		main {
-			height: 100dvh;
-			width: 100vw;
-			padding: 0 0 0 0;
-			box-sizing: border-box;
+			padding: 0 0 0 var(--tab-size);
 		}
 	}
 </style>
