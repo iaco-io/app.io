@@ -33,6 +33,7 @@
 	},
 	"dependencies": {
 		"@lucide/svelte": "^1.34.0",
-		"ogl": "^1.0.11"
+		"ogl": "^1.0.11",
+		"tinybase": "^9.5.1"
 	}
 }

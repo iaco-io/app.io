@@ -12,6 +12,12 @@
 	} from '@lucide/svelte'
 	import Button from '@shared/Button.svelte'
 	import Muscle from '@shared/Muscle.svelte'
+
+	import { store } from '$lib/db/tinybase'
+	import { CellView, getCell, getRow } from 'tinybase/ui-svelte'
+	store.setRow('trackers', '0', { title: 'test', icon: 'Carrot', color: 'green' })
+	const row = getRow('trackers', '0', store)
+	const cell = getCell('trackers', '0', 'title', store)
 </script>
 
 <br />
@@ -20,6 +26,11 @@
 <br />
 <br />
 <br />
+
+<CellView tableId="trackers" rowId="0" cellId="0" {store} />
+<p>cell: {row.current.title} {row.current.icon} {row.current.color}</p>
+
+<input bind:value={cell.current} />
 
 <div>
 	<Button onclick={() => {}} color="var(--red)">
