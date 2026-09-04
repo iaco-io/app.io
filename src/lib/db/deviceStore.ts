@@ -11,13 +11,13 @@ export const dv_lastNotebook = 'lastNotebook'
 export const dt_agendaSort = 'agendaSort'
 export const dc_agendaSortForPath = 'sortForPath'
 
-const today = DateTime.local()
-const year = yearPadded(today.year)
-const oday = odayPadded(today.ordinal)
+const now = DateTime.now()
+const year = yearPadded(now.year)
+const oday = odayPadded(now.ordinal)
 
 export const deviceStore = createStore()
   .setValuesSchema({
-    [dv_lastOpenU]: { type: 'number', default: DateTime.local().toMillis() },
+    [dv_lastOpenU]: { type: 'number', default: now.toMillis() },
     [dv_agendaYD]: { type: 'string', default: year + oday },
     [dv_agendaPath]: { type: 'string', default: '' },
     [dv_lastFolder]: { type: 'string', default: '' },

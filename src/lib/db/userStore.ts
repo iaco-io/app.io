@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
 import { createStore } from 'tinybase'
+import { v7 as uuidv7 } from 'uuid'
 
 export const uv_userId = 'userId'
 export const uv_userAlias = 'userAlias' // @iaco
@@ -18,14 +19,15 @@ export const uc_trackerRowId = 'trackerId'
 export const uc_trackerStartU = 'startU'
 export const uc_trackerEndU = 'endU'
 
-const userId = crypto.randomUUID()
+const userId = uuidv7()
+const nowMs = DateTime.now().toMillis()
 
 export const userStore = createStore()
   .setValuesSchema({
     [uv_userId]: { type: 'string', default: userId },
     [uv_userAlias]: { type: 'string', default: '' },
     [uv_userName]: { type: 'string', default: '' },
-    [uv_userCreatedU]: { type: 'number', default: DateTime.now().toMillis() },
+    [uv_userCreatedU]: { type: 'number', default: nowMs },
     [uv_weekStart]: { type: 'string', default: 'b' },
     [uv_weekCareDays]: { type: 'string', default: 'bd' },
   })
