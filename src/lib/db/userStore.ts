@@ -18,12 +18,14 @@ export const uc_trackerRowId = 'trackerId'
 export const uc_trackerStartU = 'startU'
 export const uc_trackerEndU = 'endU'
 
+const userId = crypto.randomUUID()
+
 export const userStore = createStore()
   .setValuesSchema({
-    [uv_userId]: { type: 'string', default: '' },
+    [uv_userId]: { type: 'string', default: userId },
     [uv_userAlias]: { type: 'string', default: '' },
     [uv_userName]: { type: 'string', default: '' },
-    [uv_userCreatedU]: { type: 'number', default: DateTime.local().toMillis() },
+    [uv_userCreatedU]: { type: 'number', default: DateTime.now().toMillis() },
     [uv_weekStart]: { type: 'string', default: 'b' },
     [uv_weekCareDays]: { type: 'string', default: 'bd' },
   })
@@ -34,8 +36,8 @@ export const userStore = createStore()
       [uc_trackerColor]: { type: 'string' },
     },
     [ut_trackerRecs]: {
-      [uc_trackerRowId]: { type: 'string' },
-      [uc_trackerStartU]: { type: 'number' },
-      [uc_trackerEndU]: { type: 'number' }
+      [uc_trackerRowId]: { type: 'string', required: true },
+      [uc_trackerStartU]: { type: 'number', required: true },
+      [uc_trackerEndU]: { type: 'number', allowNull: true, default: null, required: true }
     }
   })
