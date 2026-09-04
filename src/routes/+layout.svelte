@@ -61,11 +61,11 @@
 
 <NavBar
 	tabs={[
-		{
-			title: 'ohana',
-			href: '/ohana',
-			icon: HeartHandshake
-		},
+		// {
+		// 	title: 'ohana',
+		// 	href: '/ohana',
+		// 	icon: HeartHandshake
+		// },
 		{
 			title: 'care',
 			href: '/care',
@@ -80,12 +80,12 @@
 			title: 'me',
 			href: '/me',
 			icon: User
-		},
-		{
-			title: 'zen',
-			href: '/zen',
-			icon: Wind
 		}
+		// {
+		// 	title: 'qɑɭm',
+		// 	href: '/qalm',
+		// 	icon: Wind
+		// }
 	]}
 />
 
@@ -94,6 +94,10 @@
 </main>
 
 <style>
+	main {
+		padding-bottom: 150px;
+	}
+
 	.big-window {
 		display: none;
 	}
