@@ -1,117 +1,74 @@
 <script>
-	import {
-		Antenna,
-		BedDouble,
-		Bird,
-		Carrot,
-		FaceSlightlyFrowning,
-		Plus,
-		Timer,
-		Turtle,
-		Tv,
-		Wind
-	} from '@lucide/svelte'
-	import Button from '@shared/Button.svelte'
-	import Muscle from '@shared/Muscle.svelte'
-
-	import {
-		uc_trackerColor,
-		uc_trackerIcon,
-		uc_trackerTitle,
-		userStore,
-		ut_trackers,
-		uv_userId
-	} from '$lib/db/userStore'
-	import { createTracker } from '$lib/features/tracker'
+	import Trackers from '$lib/features/Trackers.svelte'
+	import { Hourglass, Inbox } from '@lucide/svelte'
 	import ButtonPopup from '@shared/ButtonPopup.svelte'
-	import { getColor } from '@shared/colors'
-	import { getIcon } from '@shared/icons'
-	import { getTable, ValueView } from 'tinybase/ui-svelte'
-	import { EditableValueView } from 'tinybase/ui-svelte-dom'
-
-	const trackers = getTable(ut_trackers, userStore)
-	let trackerTitle = $state('')
 </script>
 
-<br />
-<br />
-<br />
+<Trackers />
 
-<ButtonPopup color={'var(--blue)'}>
-	{#snippet trigger()}Open me{/snippet}
-	<p>aaa</p>
-	<p>b</p>
-</ButtonPopup>
+{#each Array(9) as _, i}
+	<br />
+	<br />
+	<br />
+	{i}askdfhas ldfjh ajsdf laskj sadf asdf s
+{/each}
 
-<p>id: <ValueView valueId={uv_userId} store={userStore} /></p>
-<EditableValueView valueId={uv_userId} store={userStore} />
+<div id="tracker-button">
+	<ButtonPopup color={'var(--blue)'}>
+		{#snippet trigger()}
+			<Hourglass class="icon" />
+			<!-- <Play fill="currentColor" style="height: 12px;" /> -->
+			<!-- <Muscle class="icon" /> -->
+			<!-- <span class="hour-min">
+				0:00:
+				<span class="seconds">00</span>
+			</span> -->
+		{/snippet}
 
-<div style="height: 40px;">
-	<input bind:value={trackerTitle} />
-	<Button
-		color="var(--blue)"
-		onclick={() => {
-			createTracker(trackerTitle, 'timer', 'var(--mint)')
-		}}
-	>
-		<Plus class="icon" color="var(--blue)" />
-		<Timer class="icon" color="var(--blue)" />
-	</Button>
+		<Trackers />
+	</ButtonPopup>
 </div>
 
-<div>
-	{#each Object.values(trackers.current) as tracker}
-		{@const Icon = getIcon(tracker[uc_trackerIcon])}
+<div id="inbox-button">
+	<ButtonPopup color={'var(--blue)'}>
+		{#snippet trigger()}
+			<Inbox class="icon" />
+			&nbsp;23
+		{/snippet}
 
-		<Button onclick={() => {}} color={getColor(tracker[uc_trackerColor])}>
-			<Icon class="icon" color={getColor(tracker[uc_trackerColor])} />
-			{tracker[uc_trackerTitle]}
-		</Button>
-	{/each}
-</div>
-
-<div>
-	<Button onclick={() => {}} color="var(--red)">
-		<FaceSlightlyFrowning class="icon" color="var(--red)" /> o!
-	</Button>
-	<Button onclick={() => {}} color="var(--pink)">
-		<Tv class="icon" color="var(--pink)" /> tv
-	</Button>
-	<Button onclick={() => {}} color="var(--brown)">
-		<Antenna class="icon" color="var(--brown)" /> t.
-	</Button>
-</div>
-
-<div>
-	<Button onclick={() => {}} color="var(--orange)">
-		<Carrot class="icon" color="var(--orange)" /> food
-	</Button>
-	<Button onclick={() => {}} color="var(--green)">
-		<Muscle class="icon" color="var(--green)" /> gym
-	</Button>
-	<Button onclick={() => {}} color="var(--purple)">
-		<BedDouble class="icon" color="var(--purple)" /> .zZ
-	</Button>
-</div>
-
-<div>
-	<Button onclick={() => {}} color="var(--yellow)">
-		<Bird class="icon" color="var(--yellow)" /> ócio
-	</Button>
-	<Button onclick={() => {}} color="var(--blue)">
-		<Wind class="icon" color="var(--blue)" />io
-	</Button>
-	<Button onclick={() => {}} color="var(--mint)">
-		<Turtle class="icon" color="var(--mint)" /> app
-	</Button>
+		<p>inbox</p>
+	</ButtonPopup>
 </div>
 
 <style>
-	div {
-		display: flex;
-		height: 60px;
-		gap: 5px;
-		padding: 5px;
-		margin: 10px;
+	#inbox-button {
+		position: absolute;
+		z-index: 100;
+		bottom: calc(var(--navbar-size) + env(safe-area-inset-bottom));
+		right: 0;
+		margin: 0 10px 20px 0;
+		width: 80px;
+		height: 50px;
+		font-size: 14px;
+	}
+
+	#tracker-button {
+		position: absolute;
+		z-index: 100;
+		bottom: calc(var(--navbar-size) + env(safe-area-inset-bottom));
+		margin: 0 0 20px 10px;
+		/* width: 110px; */
+		width: 70px;
+		height: 50px;
+		font-size: 14px;
+	}
+
+	.hour-min {
+		display: inline-flex;
+		align-items: baseline;
+	}
+
+	.seconds {
+		font-size: 12px;
 	}
 </style>
