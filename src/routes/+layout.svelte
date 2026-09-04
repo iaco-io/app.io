@@ -5,6 +5,7 @@
 	import '@shared/style.css'
 	import { onMount } from 'svelte'
 	import '../style.css'
+	import { initAllPersisters } from '$lib/db/persisters'
 
 	let { children } = $props()
 
@@ -17,7 +18,11 @@
 		return () => media.removeEventListener('change', update)
 	})
 
-	function handleClick(event: MouseEvent) {
+	onMount(() => {
+		initAllPersisters()
+	})
+
+	function handleExternalUrl(event: MouseEvent) {
 		const target = event.target as HTMLElement
 		const link = target.closest('a')
 
@@ -30,7 +35,7 @@
 	}
 </script>
 
-<svelte:window onclick={handleClick} />
+<svelte:window onclick={handleExternalUrl} />
 
 <div class="big-window">
 	<AuroraBg
