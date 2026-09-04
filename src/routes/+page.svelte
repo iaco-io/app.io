@@ -5,32 +5,70 @@
 		Bird,
 		Carrot,
 		FaceSlightlyFrowning,
-		MicSignal,
-		Music2,
+		Plus,
+		Timer,
 		Turtle,
-		Tv
+		Tv,
+		Wind
 	} from '@lucide/svelte'
 	import Button from '@shared/Button.svelte'
 	import Muscle from '@shared/Muscle.svelte'
 
-	import { store } from '$lib/db/tinybase'
-	import { CellView, getCell, getRow } from 'tinybase/ui-svelte'
-	store.setRow('trackers', '0', { title: 'test', icon: 'Carrot', color: 'green' })
-	const row = getRow('trackers', '0', store)
-	const cell = getCell('trackers', '0', 'title', store)
+	import {
+		uc_trackerColor,
+		uc_trackerIcon,
+		uc_trackerTitle,
+		userStore,
+		ut_trackers,
+		uv_userId
+	} from '$lib/db/userStore'
+	import { createTracker } from '$lib/features/tracker'
+	import ButtonPopup from '@shared/ButtonPopup.svelte'
+	import { getColor } from '@shared/colors'
+	import { getIcon } from '@shared/icons'
+	import { getTable, ValueView } from 'tinybase/ui-svelte'
+	import { EditableValueView } from 'tinybase/ui-svelte-dom'
+
+	const trackers = getTable(ut_trackers, userStore)
+	let trackerTitle = $state('')
 </script>
 
 <br />
 <br />
 <br />
-<br />
-<br />
-<br />
 
-<CellView tableId="trackers" rowId="0" cellId="0" {store} />
-<p>cell: {row.current.title} {row.current.icon} {row.current.color}</p>
+<ButtonPopup color={'var(--blue)'}>
+	{#snippet trigger()}Open me{/snippet}
+	<p>aaa</p>
+	<p>b</p>
+</ButtonPopup>
 
-<input bind:value={cell.current} />
+<p>id: <ValueView valueId={uv_userId} store={userStore} /></p>
+<EditableValueView valueId={uv_userId} store={userStore} />
+
+<div style="height: 40px;">
+	<input bind:value={trackerTitle} />
+	<Button
+		color="var(--blue)"
+		onclick={() => {
+			createTracker(trackerTitle, 'timer', 'var(--mint)')
+		}}
+	>
+		<Plus class="icon" color="var(--blue)" />
+		<Timer class="icon" color="var(--blue)" />
+	</Button>
+</div>
+
+<div>
+	{#each Object.values(trackers.current) as tracker}
+		{@const Icon = getIcon(tracker[uc_trackerIcon])}
+
+		<Button onclick={() => {}} color={getColor(tracker[uc_trackerColor])}>
+			<Icon class="icon" color={getColor(tracker[uc_trackerColor])} />
+			{tracker[uc_trackerTitle]}
+		</Button>
+	{/each}
+</div>
 
 <div>
 	<Button onclick={() => {}} color="var(--red)">
@@ -58,11 +96,10 @@
 
 <div>
 	<Button onclick={() => {}} color="var(--yellow)">
-		<Bird class="icon" color="var(--yellow)" />
-		<Music2 size="12" style="stroke-width: 2.2px" class="icon" color="var(--yellow)" /> ócio
+		<Bird class="icon" color="var(--yellow)" /> ócio
 	</Button>
 	<Button onclick={() => {}} color="var(--blue)">
-		<MicSignal class="icon" color="var(--blue)" />io
+		<Wind class="icon" color="var(--blue)" />io
 	</Button>
 	<Button onclick={() => {}} color="var(--mint)">
 		<Turtle class="icon" color="var(--mint)" /> app
